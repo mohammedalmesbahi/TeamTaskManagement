@@ -97,5 +97,23 @@ namespace TeamTaskManagement.Application.Services
                 return ServiceResponse<bool>.FailureResponse(ex.Message);
             }
         }
+        public async Task<ServiceResponse<bool>> RemoveUserToTeamAsync(long userId)
+        {
+            try
+            {
+                var user = await _userRepository.RemoveUserToTeamAsync(userId);
+
+                if (!user)
+                {
+                    return ServiceResponse<bool>.FailureResponse("لم تتم العملية بنجاح");
+                }
+                return ServiceResponse<bool>.SuccessResponse(true, "تمت العملية بنجاح");
+            }
+            catch (Exception ex)
+            {
+                return ServiceResponse<bool>.FailureResponse(ex.Message);
+            }
+        }
+        
     }
 }

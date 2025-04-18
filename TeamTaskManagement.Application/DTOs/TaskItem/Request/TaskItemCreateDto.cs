@@ -17,6 +17,7 @@ namespace TeamTaskManagement.Application.DTOs.TaskItem.Request
         public long UserId { get; set; }
         public long TeamId { get; set; }
         public DateTime DueDate { get; set; }
+        public TaskProgressStatus? Status { get; set; } 
         public PriorityLevel? PriorityLevel { get; set; } 
     }
 }

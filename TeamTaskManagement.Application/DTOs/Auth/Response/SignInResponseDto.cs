@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TeamTaskManagement.Application.DTOs.User.Response;
 
 namespace TeamTaskManagement.Application.DTOs.Auth.Response
 {
@@ -14,6 +15,7 @@ namespace TeamTaskManagement.Application.DTOs.Auth.Response
         public string PhoneNumber { get; set; }
         public string Role { get; set; }
         public string Token { get; set; }
+        public UserResponseDto User { get; set; }
         public DateTime ExpiresOn { get; set; }
     }
 }

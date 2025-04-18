@@ -60,5 +60,18 @@ namespace TeamTaskManagement.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> RemoveUserToTeamAsync( long userId)
+        {
+       
+            var user = await _dbSet.FindAsync(userId);
+
+            if (user == null)
+                return false;
+            user.TeamId = null;
+            user.Team = null;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+      
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using TeamTaskManagement.Application.Common.Responses;
 using TeamTaskManagement.Application.DTOs.Auth.Request;
 using TeamTaskManagement.Application.DTOs.Auth.Response;
+using TeamTaskManagement.Application.DTOs.User.Response;
 using TeamTaskManagement.Application.Interfaces;
 using TeamTaskManagement.Domain.Entities;
 
@@ -21,11 +23,13 @@ namespace TeamTaskManagement.Application.Services
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly IConfiguration _configuration;
-        public AuthService(UserManager<User> userManager, RoleManager<Role> roleManager, IConfiguration configuration)
+           private readonly IMapper _mapper;
+        public AuthService(UserManager<User> userManager, RoleManager<Role> roleManager, IMapper mapper, IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _mapper = mapper;
         }
         public async Task<ServiceResponse<SignInResponseDto>> SignInAsync(SignInRequestDto signInDto)
         {
@@ -60,7 +64,9 @@ namespace TeamTaskManagement.Application.Services
                 Name = user.Name,
                 Role = userRoles.First(),
                 PhoneNumber = user.PhoneNumber,
-                ExpiresOn = DateTime.UtcNow.AddDays(1)
+                ExpiresOn = DateTime.UtcNow.AddDays(1),
+                User = _mapper.Map<UserResponseDto>(user)
+
             };
             return ServiceResponse<SignInResponseDto>.SuccessResponse(dtoResponse, "تم تسجيل الدخول بنجاح");
         }

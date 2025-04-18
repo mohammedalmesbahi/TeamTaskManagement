@@ -10,7 +10,7 @@ namespace TeamTaskManagement.Domain.Entities
     public class Team: BaseEntityWithName
     {
         public string Description { get; set; }
-        public virtual  ICollection<User> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<TaskItem> Tasks { get; set; }
     }
 }

@@ -45,5 +45,11 @@ namespace TeamTaskManagement.Api.Controllers.v1
             var result = await _userService.AddUserToTeamAsync(teamId, userId);
             return Ok(result);
         }
+        [HttpPost("removeUserToTeam")]
+        public async Task<IActionResult> RemoveUserToTeam(long userId)
+        {
+            var result = await _userService.RemoveUserToTeamAsync(userId);
+            return Ok(result);
+        }
     }
 }

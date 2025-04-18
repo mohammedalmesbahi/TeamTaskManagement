@@ -29,10 +29,10 @@ namespace TeamTaskManagement.Infrastructure.Repositories.Base
             return res.Entity;
         }
 
-        public virtual async Task<T> UpdateAsync(T entity)
+        public virtual T Update(T entity)
         {
             var res = _dbSet.Update(entity);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
             return res.Entity;
         }
 
@@ -51,8 +51,8 @@ namespace TeamTaskManagement.Infrastructure.Repositories.Base
             var entity = await GetByIdAsync(id);
             if (entity == null)
                 throw new KeyNotFoundException($"Entity of type {typeof(T).Name} with ID {id} not found.");
-
-            _dbSet.Remove(entity);
+            entity.State = Domain.Common.Enums.EntityState.Deleted;
+            _dbSet.Update(entity);
             await _dbContext.SaveChangesAsync();
             return entity;
         }
@@ -72,7 +72,7 @@ namespace TeamTaskManagement.Infrastructure.Repositories.Base
             return await _dbSet.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate)
+        public virtual async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate)
         {
             return await _dbSet.Where(predicate).ToListAsync();
         }

@@ -9,6 +9,7 @@ using TeamTaskManagement.Application.Common.Responses;
 using TeamTaskManagement.Application.DTOs.Base;
 using TeamTaskManagement.Application.Interfaces.Base;
 using TeamTaskManagement.Domain.Common;
+using TeamTaskManagement.Domain.Common.Enums;
 using TeamTaskManagement.Domain.Interfaces;
 
 namespace TeamTaskManagement.Application.Services.Base
@@ -48,9 +49,8 @@ namespace TeamTaskManagement.Application.Services.Base
             await ValidationUpdateRequest(dto);
             try
             {
-                var existEntity = await _repository.GetByIdAsync(dto.Id);
                 var entity = _mapper.Map<TEntity>(dto);
-                var res = _repository.UpdateAsync(entity);
+                var res = _repository.Update(entity);
                 var dtoResult = _mapper.Map<TEntityDto>(res);
                 return ServiceResponse<TEntityDto>.SuccessResponse(dtoResult, "تم التعديل بنجاح");
             }
@@ -60,11 +60,11 @@ namespace TeamTaskManagement.Application.Services.Base
             }
 
         }
-        public async Task<ServiceResponse<IEnumerable<TEntityDto>>> GetAllAsync()
+        public virtual async Task<ServiceResponse<IEnumerable<TEntityDto>>> GetAllAsync()
         {
             try
             {
-                var entities = await _repository.GetAllAsync();
+                var entities = await _repository.FindAllAsync(s=>s.State==EntityState.Active || s.State==EntityState.Inactive);
                 var dtoResult = _mapper.Map<IEnumerable<TEntityDto>>(entities);
                 return ServiceResponse<IEnumerable<TEntityDto>>.SuccessResponse(dtoResult, "تمت العملية بنجاح");
             }

@@ -9,5 +9,6 @@ namespace TeamTaskManagement.Domain.Interfaces
         Task<IEnumerable<User>> GetAllAsync();
         Task<bool> DeleteAsync(long id);
         Task<bool> AddUserToTeamAsync(long teamId, long userId);
+        Task<bool> RemoveUserToTeamAsync(long userId);
     }
 }

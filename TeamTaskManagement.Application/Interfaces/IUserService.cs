@@ -14,5 +14,6 @@ namespace TeamTaskManagement.Application.Interfaces
         Task<ServiceResponse<IEnumerable<UserResponseDto>>> GetAllAsync();
         Task<ServiceResponse<bool>> DeleteAsync(long id);
         Task<ServiceResponse<bool>> AddUserToTeamAsync(long teamId, long userId);
+        Task<ServiceResponse<bool>> RemoveUserToTeamAsync(long userId);
     }
 }

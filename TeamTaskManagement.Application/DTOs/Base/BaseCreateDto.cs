@@ -9,7 +9,5 @@ namespace TeamTaskManagement.Application.DTOs.Base
 {
     public class BaseCreateDto : BaseEntityDto
     {
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public EntityState State { get; set; } = EntityState.Active;
     }
 }
